@@ -1,0 +1,9 @@
+.user-card{
+    display: flex;
+}
+.user-picture{
+    align-self: center
+}
+.user-info{
+    list-style: none;
+}

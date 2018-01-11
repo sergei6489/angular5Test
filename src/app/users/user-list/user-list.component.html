@@ -1,0 +1,74 @@
+<div *ngIf="isLoaded">
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <td></td>
+          <td>Name</td>
+          <td>Email</td>
+          <td>Phone</td>
+          <td>Dob</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let user of users"  >
+          <ng-template [ngTemplateOutlet]="loadTemplate(user)" 
+                      [ngTemplateOutletContext]="{ $implicit: user}">
+          </ng-template>
+      </tr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="!isLoaded" class="loaded">
+  <i class="fa fa-spinner fa-pulse fa-4x fa-fw"></i>
+  <span class="sr-only">Loading...</span>
+</div>
+
+<ng-template #readOnlyTemplate let-user>
+  <td><img src="{{user.picture}}"/></td>
+  <td><a [routerLink]="['/usersView', user.seed]">{{user.name}}</a></td>
+  <td>{{user.email}}</td>
+  <td>{{user.phone}}</td>
+  <td>{{user.dob}}</td>
+  <td>
+      <input type="button" value="Edit" class="btn btn-default" (click)="editUser(user)" />
+  </td>
+  <td>
+      <input type="button" value="Remove" (click)="deleteUser(user)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<ng-template #editTemplate>
+  <td><img src="{{editedUser.picture}}"/></td>
+  <td>
+      <input type="text" #name="ngModel" [(ngModel)]="editedUser.name" [class.is-invalid]="name.invalid" class="form-control" required/>
+      <div  *ngIf="name.invalid">
+            UserName required
+        </div>
+ </td>
+  <td>
+      <input type="text" #email="ngModel" [(ngModel)]="editedUser.email" [class.is-invalid]="email.invalid" class="form-control" required/>
+      <div  *ngIf="email.invalid">
+            Email required
+        </div>
+  </td>
+  <td>
+      <input type="text" #phone="ngModel" [(ngModel)]="editedUser.phone" [class.is-invalid]="phone.invalid" class="form-control" required/>
+      <div  *ngIf="phone.invalid">
+            Phone required
+        </div>
+  </td>
+  <td>
+        <input type="text" #dob="ngModel" [(ngModel)]="editedUser.dob" [class.is-invalid]="dob.invalid" class="form-control" required/>
+        <div  *ngIf="dob.invalid">
+                Dob required
+        </div>
+  </td>
+  <td>
+      <input type="button" value="Сохранить" (click)="saveUser()" class="btn btn-success" [disabled]="phone.invalid || dob.invalid || email.invalid || name.invalid" />
+  </td>
+  <td>
+      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>
