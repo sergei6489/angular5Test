@@ -21,11 +21,16 @@ export class UserListComponent implements OnInit {
     let loadedCount = 0;
     for (let n=0;n<10;n++)
     {
-     this.userService.getRandomUser().subscribe(response=>{
-       this.users.push(response);
-       loadedCount++;
-       this.isLoaded = loadedCount == 10;
-     });
+      var self = this;
+      setTimeout(function(){
+        self.userService.getRandomUser().subscribe(response=>{
+          self.users.push(response);
+          loadedCount++;
+          self.isLoaded = loadedCount == 10;
+        });
+
+      },n*200)
+
      }
   }
 
