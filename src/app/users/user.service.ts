@@ -17,7 +17,7 @@ export class UserService extends BaseService {
 
   public getRandomUser(): Observable<User>
   {
-    return this.sendRequest(RequestMethod.Get,"https://randomuser.me/api")
+    return this.sendRequest(RequestMethod.Get,"/api")
       .map((response)=>this.ExtractRandomUser(response))
   }
 
@@ -25,7 +25,7 @@ export class UserService extends BaseService {
 
   public getUser(seed: string): Observable<User>
   {
-      return this.sendRequest(RequestMethod.Get,"https://randomuser.me/api",{seed:seed})
+      return this.sendRequest(RequestMethod.Get,"/api",{seed:seed})
       .map((response)=>this.ExtractRandomUser(response))
   }
 
